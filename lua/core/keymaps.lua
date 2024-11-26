@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap
 -- Personal de juan
-keymap.set("i", "jk", "<ESC>",{desc = "Exit insert mode with jk"})
+keymap.set({'i','v'}, "jk", "<ESC>",{desc = "Exit insert mode with jk"})
 
 
 -- Mapeo para compilar y ejecutar la clase actual
@@ -20,7 +20,7 @@ keymap.set("i", "jk", "<ESC>",{desc = "Exit insert mode with jk"})
     --:gsub("%.java$", "")              -- Elimina la extensión .java
     --:gsub("/", ".")                   -- Convierte las barras en puntos
 
-  -- Comando para compilar todas las clases relacionadas
+    -- Comando para compilar todas las clases relacionadas
   --local compile_cmd = "javac -d bin -sourcepath src " .. filepath
 
   -- Comando para ejecutar la clase principal
@@ -75,7 +75,7 @@ keymap.set("n", "<leader>qc", ":cclose<CR>", { desc = "Cerrar lista rápida" })
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>", { desc = "Maximizar/Restaurar ventana" }) -- toggle maximize tab
 
 -- Nvim-tree
-keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>", { desc = "Abrir/Cerrar explorador de archivos" }) -- toggle file explorer
+keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>", { desc = "Abrir/Cerrar [E]xplorador de archivos" }) -- toggle file explorer
 keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>", { desc = "Focalizar explorador de archivos" } ) -- toggle focus to file explorer
 keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>", { desc = "Buscar archivo en explorador" }) -- find file in file explorer
 
@@ -180,6 +180,19 @@ keymap.set("n", "<leader>jr", function()
   end
 end, { desc = "Compilar y ejecutar clase con método Main (solo Java)" })
 
+-- Creacion de proyecto Maven personalizado
+keymap.set("n", "<leader>jcm", function()
+require("custom_scripts.maven_creator").create_maven_project()
+end, { desc = "Crear un proyecto Maven" })
+
+--ejecutar clases java con dap
+vim.keymap.set("n", "<leader>jf", function()
+  require("custom_scripts.run_java").run_main_without_debug()
+end, { desc = "Ejecutar método main (sin depuración)" })
+
+vim.keymap.set("n", "<leader>jg", function()
+  require("custom_scripts.run_java").run_main()
+end, { desc = "Ejecutar método main con Maven" })
 
 
 -- Debugging
