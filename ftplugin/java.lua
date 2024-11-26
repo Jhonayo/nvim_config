@@ -116,8 +116,16 @@ local config = {
           "java.util.Objects.requireNonNullElse",
           "org.mockito.Mockito.*",
         },
+        filteredTypes = {
+          "com.sun.*",
+          "io.micrometer.shaded.*",
+          "java.awt.*",
+          "jdk.*",
+          "sun.*",
+        },
         importOrder = {
           "java",
+          "jakarta",
           "javax",
           "com",
           "org",
@@ -132,6 +140,9 @@ local config = {
       codeGeneration = {
         toString = {
           template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+        },
+        hashCodeEquals = {
+          useJava7Objects = true,
         },
         useBlocks = true,
       },
