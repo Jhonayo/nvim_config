@@ -2,6 +2,7 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
+local wk = require("which-key")
 -- Personal de juan
 keymap.set({'i','v'}, "jk", "<ESC>",{desc = "Exit insert mode with jk"})
 
@@ -127,8 +128,13 @@ keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', { de
 keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>', { desc = "Mostrar autocompletado" })
 
 
+
+wk.add({
+  {"<leader>j",group = "Java"},})
+
+
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
-keymap.set("n", '<leader>jo', function ()
+  keymap.set("n", '<leader>jo', function ()
   if vim.bo.filetype == 'java' then
     require('jdtls').organize_imports();
   end
@@ -195,7 +201,7 @@ vim.keymap.set("n", "<leader>jg", function()
 end, { desc = "Ejecutar método main con Maven" })
 
 
--- Debugging
+-- Debugging ee
 -- Mapeos para depuración (DAP - Debug Adapter Protocol)
 keymap.set("n", "<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Alternar un punto de interrupción en la línea actual" })
 keymap.set("n", "<leader>bc", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", { desc = "Establecer un punto de interrupción condicional" })
