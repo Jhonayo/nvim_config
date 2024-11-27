@@ -86,6 +86,11 @@ return {
       },
     }
 
+    --para soporte de autocompletado de jsp
+    require("lspconfig").html.setup({
+      filetypes = {"html", "jsp" }, --Incluye jsp como tipo de archivo
+    })
+
     -- Globally configure all LSP floating preview popups (like hover, signature help, etc)
     local open_floating_preview = vim.lsp.util.open_floating_preview
     function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)

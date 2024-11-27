@@ -15,6 +15,13 @@ vim.opt.rtp:prepend(lazypath)
 -- This has to be set before initializing lazy
 vim.g.mapleader = " "
 
+-- configuracion para soporte de .jsp
+vim.filetype.add({
+  extension = {
+    jsp = "html", --Usa el resaltado de HTML como base
+  }
+})
+
 -- Initialize lazy with dynamic loading of anything in the plugins directory
 require("lazy").setup("plugins", {
    change_detection = {
@@ -26,5 +33,6 @@ require("lazy").setup("plugins", {
 -- These modules are not loaded by lazy
 require("core.options")
 require("core.keymaps")
+
 
 

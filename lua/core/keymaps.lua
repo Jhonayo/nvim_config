@@ -42,8 +42,8 @@ keymap.set("n", "gx", ":!open <c-r><c-a><CR>", { desc = "Abrir URL bajo el curso
 
 -- Gestión de ventanas divididas
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Dividir ventana verticalmente" })
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Dividir ventana horizontalmente" })
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Igualar el tamaño de las ventanas" })
+keymap.set("n", "<leader>sb", "hC-w>s",{ desc = "Dividir ventana horizontalmente" })
+keymap.set("n", "<leader>se", "<C-w>", { desc = "Igualar el tamaño de las ventanas" })
 keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Cerrar ventana dividida" })
 keymap.set("n", "<leader>sj", "<C-w>-", { desc = "Reducir altura de la ventana dividida" })
 keymap.set("n", "<leader>sk", "<C-w>+", { desc = "Aumentar altura de la ventana dividida" })
@@ -221,4 +221,14 @@ keymap.set("n", "<leader>d?", function() local widgets = require "dap.ui.widgets
 keymap.set("n", "<leader>df", "<cmd>Telescope dap frames<cr>", { desc = "Listar los marcos de la pila de llamadas (stack frames)" })
 keymap.set("n", "<leader>dh", "<cmd>Telescope dap commands<cr>", { desc = "Listar comandos disponibles para DAP" })
 keymap.set("n", "<leader>de", function() require('telescope.builtin').diagnostics({default_text=":E:"}) end, { desc = "Buscar y mostrar diagnósticos con Telescope" })
+
+-- tomcat
+--local tomcat = require("custom_scripts.tomcat_connection")
+vim.api.nvim_set_keymap("n", "<leader>jsb", ":lua require('custom_scripts.tomcat_connection').build_project()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>jsd", ":lua require('custom_scripts.tomcat_connection').deploy_project()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>jsr", ":lua require('custom_scripts.tomcat_connection').reload_project()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>jss", ":lua require('custom_scripts.tomcat_connection').start_tomcat()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>jst", ":lua require('custom_scripts.tomcat_connection').stop_tomcat()<CR>", { noremap = true, silent = true })
+-- Keymap para la función de despliegue automático
+vim.api.nvim_set_keymap("n", "<leader>jsp", ":lua require('custom_scripts.tomcat_connection').auto_deploy_project()<CR>", { noremap = true, silent = true })
 
