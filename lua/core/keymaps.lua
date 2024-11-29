@@ -2,37 +2,28 @@
 vim.g.mapleader = " "
 
 local keymap = vim.keymap
+local opts = { noremap = true, silent = true }
 local wk = require("which-key")
+
+--Menu de atajos
+wk.add({
+  {"<leader>f",group = "[F]ile"},
+  {"<leader>j",group = "[J]ava"},
+    {"<leader>jc",group = "[N]ew"},
+    {"<leader>js",group = "[S]erverlet"},
+  {"<leader>s",group = "[V]entanas"},
+  {"<leader>c",group = "[C]ode"},
+  {"<leader>e",group = "[E]xplorer"},
+  {"<leader>h",group = "[H]arpoon"},
+
+})
+
+
 -- Personal de juan
 keymap.set({'i','v'}, "jk", "<ESC>",{desc = "Exit insert mode with jk"})
-
-
--- Mapeo para compilar y ejecutar la clase actual
---keymap.set("n", "<leader>rm", function()
-  -- Obtener la ruta completa del archivo actual
-  --local filepath = vim.fn.expand("%:p")
-
-  -- Obtener el directorio raíz del proyecto (asume que "src" está en la raíz)
-  --local root_dir = vim.fn.fnamemodify(filepath, ":h"):match(".*src")
-
-  -- Obtener el nombre completo del paquete (basado en la ruta del archivo)
-  --local classname = filepath
-   -- :gsub(root_dir .. "/", "")         -- Elimina la parte inicial de la ruta
-    --:gsub("%.java$", "")              -- Elimina la extensión .java
-    --:gsub("/", ".")                   -- Convierte las barras en puntos
-
-    -- Comando para compilar todas las clases relacionadas
-  --local compile_cmd = "javac -d bin -sourcepath src " .. filepath
-
-  -- Comando para ejecutar la clase principal
-  --local run_cmd = "java -cp bin " .. classname
-
-  -- Abrir una terminal dividida en la parte inferior y ejecutar los comandos
-  --vim.cmd("split term://" .. compile_cmd .. " && " .. run_cmd)
---end, { desc = "Compilar y ejecutar clase con método Main" })
-
-
-
+-- Increment/decrement
+keymap.set("n", "+", "<C-a>")
+keymap.set("n", "-", "<C-x>")
 
 -- Mapeos generales
 keymap.set("n", "<leader>wq", ":wq<CR>", { desc = "Guardar y salir" })
@@ -41,14 +32,14 @@ keymap.set("n", "<leader>ww", ":w<CR>", { desc = "Guardar" })
 keymap.set("n", "gx", ":!open <c-r><c-a><CR>", { desc = "Abrir URL bajo el cursor" })
 
 -- Gestión de ventanas divididas
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Dividir ventana verticalmente" })
-keymap.set("n", "<leader>sb", "hC-w>s",{ desc = "Dividir ventana horizontalmente" })
-keymap.set("n", "<leader>se", "<C-w>", { desc = "Igualar el tamaño de las ventanas" })
-keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Cerrar ventana dividida" })
-keymap.set("n", "<leader>sj", "<C-w>-", { desc = "Reducir altura de la ventana dividida" })
-keymap.set("n", "<leader>sk", "<C-w>+", { desc = "Aumentar altura de la ventana dividida" })
-keymap.set("n", "<leader>sl", "<C-w>>5", { desc = "Aumentar ancho de la ventana dividida" })
-keymap.set("n", "<leader>sh", "<C-w><5", { desc = "Reducir ancho de la ventana dividida" })
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "[S]plit [V]ertical" })
+keymap.set("n", "<leader>sw", "<C-w>s",{ desc = "[S]plit [H]orizontalmente" })
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "[S]plit [E]qualize sizes" })
+keymap.set("n", "<leader>sc", ":close<CR>", { desc = "[C]lose [S]plit" })
+keymap.set("n", "<leader>sj", "2<C-w>-", { desc = "[S]plit [J]reduce height" })
+keymap.set("n", "<leader>sk", "2<C-w>+", { desc = "[S]plit [K]increase height" })
+keymap.set("n", "<leader>sh", "2<C-w><", { desc = "[S]plit [H]reduce width" })
+keymap.set("n", "<leader>sl", "2<C-w>>", { desc = "[S]plit [L]increase width" })
 
 -- Gestión de pestañas
 keymap.set("n", "<leader>to", ":tabnew<CR>", { desc = "Abrir una nueva pestaña" })
@@ -56,12 +47,18 @@ keymap.set("n", "<leader>tx", ":tabclose<CR>", { desc = "Cerrar una pestaña" })
 keymap.set("n", "<leader>tn", ":tabn<CR>", { desc = "Ir a la siguiente pestaña" })
 keymap.set("n", "<leader>tp", ":tabp<CR>", { desc = "Ir a la pestaña anterior" })
 
+--Code organizacion
+keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = "Mostrar acciones de código" })
+keymap.set('n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', { desc = "Renombrar símbolo" })
+keymap.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', { desc = "Formatear archivo actual" })
+keymap.set('v', '<leader>cf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', { desc = "Formatear selección actual" })
+
 -- Mapeos de diferencias
-keymap.set("n", "<leader>cc", ":diffput<CR>", { desc = "Aplicar diff desde el actual al otro" })
-keymap.set("n", "<leader>cj", ":diffget 1<CR>", { desc = "Obtener diff desde la izquierda (local)" })
-keymap.set("n", "<leader>ck", ":diffget 3<CR>", { desc = "Obtener diff desde la derecha (remoto)" })
-keymap.set("n", "<leader>cn", "]c", { desc = "Siguiente diferencia" })
-keymap.set("n", "<leader>cp", "[c", { desc = "Diferencia anterior" })
+keymap.set("n", "<leader>rc", ":diffput<CR>", { desc = "Aplicar diff desde el actual al otro" })
+keymap.set("n", "<leader>rj", ":diffget 1<CR>", { desc = "Obtener diff desde la izquierda (local)" })
+keymap.set("n", "<leader>rk", ":diffget 3<CR>", { desc = "Obtener diff desde la derecha (remoto)" })
+keymap.set("n", "<leader>rn", "]c", { desc = "Siguiente diferencia" })
+keymap.set("n", "<leader>rp", "[c", { desc = "Diferencia anterior" })
 
 -- Mapeos de lista rápida (Quickfix)
 keymap.set("n", "<leader>qo", ":copen<CR>", { desc = "Abrir lista rápida" })
@@ -93,18 +90,23 @@ keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter
 -- Git-blame
 keymap.set("n", "<leader>gb", ":GitBlameToggle<CR>", { desc = "Alternar blame de Git" })
 
--- Harpoon
-keymap.set("n", "<leader>ha", require("harpoon.mark").add_file)
-keymap.set("n", "<leader>hh", require("harpoon.ui").toggle_quick_menu)
-keymap.set("n", "<leader>h1", function() require("harpoon.ui").nav_file(1) end)
-keymap.set("n", "<leader>h2", function() require("harpoon.ui").nav_file(2) end)
-keymap.set("n", "<leader>h3", function() require("harpoon.ui").nav_file(3) end)
-keymap.set("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) end)
-keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(5) end)
-keymap.set("n", "<leader>h6", function() require("harpoon.ui").nav_file(6) end)
-keymap.set("n", "<leader>h7", function() require("harpoon.ui").nav_file(7) end)
-keymap.set("n", "<leader>h8", function() require("harpoon.ui").nav_file(8) end)
-keymap.set("n", "<leader>h9", function() require("harpoon.ui").nav_file(9) end)
+-- Harpoon OK
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<leader>ha", mark.add_file, { desc = "[H]arpoon [A]dd file" })
+vim.keymap.set("n", "<leader>hh", ui.toggle_quick_menu, { desc = "[H]arpoon [H]arpoon menu" })
+vim.keymap.set("n", "<leader>hr", mark.rm_file, { desc = "[H]arpoon [R]emove current file" })
+
+vim.keymap.set("n", "<leader>h1", function() ui.nav_file(1) end, { desc = "[H]arpoon go to file [1]" })
+vim.keymap.set("n", "<leader>h2", function() ui.nav_file(2) end, { desc = "[H]arpoon go to file [2]" })
+vim.keymap.set("n", "<leader>h3", function() ui.nav_file(3) end, { desc = "[H]arpoon go to file [3]" })
+vim.keymap.set("n", "<leader>h4", function() ui.nav_file(4) end, { desc = "[H]arpoon go to file [4]" })
+vim.keymap.set("n", "<leader>h5", function() ui.nav_file(5) end, { desc = "[H]arpoon go to file [5]" })
+vim.keymap.set("n", "<leader>h6", function() ui.nav_file(6) end, { desc = "[H]arpoon go to file [6]" })
+vim.keymap.set("n", "<leader>h7", function() ui.nav_file(7) end, { desc = "[H]arpoon go to file [7]" })
+vim.keymap.set("n", "<leader>h8", function() ui.nav_file(8) end, { desc = "[H]arpoon go to file [8]" })
+vim.keymap.set("n", "<leader>h9", function() ui.nav_file(9) end, { desc = "[H]arpoon go to file [9]" })
 
 -- Vim REST Console
 keymap.set("n", "<leader>xr", ":call VrcQuery()<CR>", { desc = "Ejecutar consulta REST" } ) -- Run REST query
@@ -117,10 +119,9 @@ keymap.set('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { des
 keymap.set('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', { desc = "Ir a la definición del tipo" })
 keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', { desc = "Listar referencias del símbolo" })
 keymap.set('n', '<leader>gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', { desc = "Mostrar ayuda de firma de función" })
-keymap.set('n', '<leader>rr', '<cmd>lua vim.lsp.buf.rename()<CR>', { desc = "Renombrar símbolo" })
-keymap.set('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', { desc = "Formatear archivo actual" })
-keymap.set('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', { desc = "Formatear selección actual" })
-keymap.set('n', '<leader>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = "Mostrar acciones de código" })
+
+
+
 keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = "Mostrar diagnósticos en una ventana flotante" })
 keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = "Ir al diagnóstico anterior" })
 keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = "Ir al siguiente diagnóstico" })
@@ -128,9 +129,6 @@ keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', { de
 keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>', { desc = "Mostrar autocompletado" })
 
 
-
-wk.add({
-  {"<leader>j",group = "Java"},})
 
 
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
@@ -159,7 +157,7 @@ keymap.set("n", '<leader>jm', function ()
 end, { desc = "Ejecutar prueba del método más cercano (Java)" })
 
 -- Mapeo para compilar y ejecutar la clase actual (solo en archivos Java)
-keymap.set("n", "<leader>jr", function()
+keymap.set("n", "<leader>jw", function()
   if vim.bo.filetype == "java" then
     -- Obtener la ruta completa del archivo actual
     local filepath = vim.fn.expand("%:p")
@@ -184,7 +182,7 @@ keymap.set("n", "<leader>jr", function()
   else
     print("Este comando solo está disponible para archivos Java.")
   end
-end, { desc = "Compilar y ejecutar clase con método Main (solo Java)" })
+end, { desc = "[R]un [J]ava" })
 
 -- Creacion de proyecto Maven personalizado
 keymap.set("n", "<leader>jcm", function()
@@ -196,9 +194,9 @@ vim.keymap.set("n", "<leader>jf", function()
   require("custom_scripts.run_java").run_main_without_debug()
 end, { desc = "Ejecutar método main (sin depuración)" })
 
-vim.keymap.set("n", "<leader>jg", function()
+vim.keymap.set("n", "<leader>jx", function()
   require("custom_scripts.run_java").run_main()
-end, { desc = "Ejecutar método main con Maven" })
+end, { desc = "[R]un [J]ava Maven" })
 
 
 -- Debugging ee
@@ -224,8 +222,8 @@ keymap.set("n", "<leader>de", function() require('telescope.builtin').diagnostic
 
 -- tomcat
 --local tomcat = require("custom_scripts.tomcat_connection")
-vim.api.nvim_set_keymap("n", "<leader>jsb", ":lua require('custom_scripts.tomcat_connection').build_project()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>jsd", ":lua require('custom_scripts.tomcat_connection').deploy_project()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>jsb", ":lua require('custom_scripts.tomcat_connection').build_project()<CR>",{desc = "[B]uilt}"})
+vim.api.nvim_set_keymap("n", "<leader>jsd", ":lua require('custom_scripts.tomcat_connection').deploy_project()<CR>",{desc = "[D]eploy"})
 vim.api.nvim_set_keymap("n", "<leader>jsr", ":lua require('custom_scripts.tomcat_connection').reload_project()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>jss", ":lua require('custom_scripts.tomcat_connection').start_tomcat()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>jst", ":lua require('custom_scripts.tomcat_connection').stop_tomcat()<CR>", { noremap = true, silent = true })

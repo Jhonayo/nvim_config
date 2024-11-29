@@ -20,6 +20,43 @@ local function deploy_project()
     print("Desplegando proyecto: " .. project_name)
     vim.cmd("!  cp " .. war_file .. " " .. tomcat_webapps)
 end
+--
+--intento para mejora de funcion
+--local function deploy_project()
+   -- local project_name, cwd = detect_project()
+   -- local target_dir = cwd .. "/target/"
+   -- local tomcat_webapps = "/opt/tomcat/apache-tomcat-10.1.33/webapps/"
+
+    -- Buscar cualquier archivo WAR generado en el directorio target
+   -- local handle = io.popen("ls " .. target_dir .. "*.war")
+  --  local war_file = handle:read("*a"):gsub("%s+", "") -- Elimina saltos de línea o espacios en blanco
+   -- handle:close()
+
+   -- if war_file == "" then
+    --    print("No se encontró ningún archivo WAR en: " .. target_dir)
+     --   return
+   -- end
+
+    -- Renombrar el archivo WAR al nombre del proyecto
+   -- local renamed_war = target_dir .. project_name .. ".war"
+    --vim.cmd("!mv " .. war_file .. " " .. renamed_war)
+
+    -- Limpiar el directorio webapps para evitar conflictos
+  --  vim.cmd("!rm -rf " .. tomcat_webapps .. project_name .. "*")
+
+    -- Copiar el archivo WAR renombrado al directorio de Tomcat
+--    print("Desplegando proyecto: " .. renamed_war)
+--    vim.cmd("!cp " .. renamed_war .. " " .. tomcat_webapps)
+--end
+
+
+
+
+
+
+
+
+
 
 -- Recargar el proyecto en Tomcat sin reiniciar el servidor
 local function reload_project()
