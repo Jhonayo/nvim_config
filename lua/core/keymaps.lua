@@ -225,7 +225,7 @@ keymap.set("n", "<leader>de", function() require('telescope.builtin').diagnostic
 vim.api.nvim_set_keymap("n", "<leader>jsb", ":lua require('custom_scripts.tomcat_connection').build_project()<CR>",{desc = "[B]uilt}"})
 vim.api.nvim_set_keymap("n", "<leader>jsd", ":lua require('custom_scripts.tomcat_connection').deploy_project()<CR>",{desc = "[D]eploy"})
 vim.api.nvim_set_keymap("n", "<leader>jsr", ":lua require('custom_scripts.tomcat_connection').reload_project()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>jss", ":lua require('custom_scripts.tomcat_connection').start_tomcat()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>jss", ":lua require('custom_scripts.tomcat_connection').build_and_deploy(<CR>",{desc = "build_and_deployy"} )
 vim.api.nvim_set_keymap("n", "<leader>jst", ":lua require('custom_scripts.tomcat_connection').stop_tomcat()<CR>", { noremap = true, silent = true })
 -- Keymap para la función de despliegue automático
 vim.api.nvim_set_keymap("n", "<leader>jsp", ":lua require('custom_scripts.tomcat_connection').auto_deploy_project()<CR>", { noremap = true, silent = true })
